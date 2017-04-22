@@ -192,6 +192,19 @@ class WP_AJAX_Post_Handler {
         if ( $this->_get_param( 'type' ) ) {
             $this->_args['post_type'] = $this->_get_param( 'type' );
         }
+
+        $this->_args['tax_query'] = array();
+        $taxonomies = get_taxonomies();
+
+        foreach ( $taxonomies as $taxonomy ) {
+            if ( isset( $_REQUEST['tax_' . $taxonomy] ) ) {
+                $this->_args['tax_query'][] = array(
+                    'taxonomy' => $taxonomy,
+                    'field' => 'slug',
+                    'terms' => explode( ',', $_REQUEST['tax_' . $taxonomy] ),
+                );
+            }
+        }
     }
 
     /**
