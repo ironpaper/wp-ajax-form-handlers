@@ -166,22 +166,16 @@ class WP_AJAX_Post_Handler {
     }
 
     /**
-     * Handler request for nopriv.
+     * Handle request.
      */
     public function handler() {
+
         $this->_sanitize_request();
+
         if ( !$this->_validate_request() ) {
             wp_die();
         }
 
-        $this->_handle_default_args();
-        $this->_handle_tax_args();
-    }
-
-    /**
-     * Handle default arguments.
-     */
-    protected function _handle_default_args() {
         $this->_args = array(
             'paged' => $this->_get_param( 'paged' ),
             'showposts' => $this->_get_param( 'showposts' ),
@@ -195,12 +189,7 @@ class WP_AJAX_Post_Handler {
         if ( $this->_get_param( 'post_type' ) ) {
             $this->_args['post_type'] = $this->_get_param( 'post_type' );
         }
-    }
 
-    /**
-     * Handle taxonomy arguments.
-     */
-    protected function _handle_tax_args() {
         $this->_args['tax_query'] = array();
         $taxonomies = get_taxonomies();
 
@@ -213,6 +202,7 @@ class WP_AJAX_Post_Handler {
                 );
             }
         }
+        
     }
 
     /**

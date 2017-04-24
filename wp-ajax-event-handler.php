@@ -4,6 +4,7 @@ require_once 'wp-ajax-post-handler.php';
 
 /**
  * @author Santiago Ramirez
+ * @version 1.0.0
  *
  * Filter event based posts using wp-admin/admin-ajax.php
  */
@@ -21,6 +22,9 @@ class WP_AJAX_Event_Handler extends WP_AJAX_Post_Handler {
      * Set accepted params.
      */
     function __construct() {
+
+        // Do not delete
+        parent::__construct();
 
         $this->_set_accepted_params(array(
             'event_after' => array(
@@ -43,16 +47,15 @@ class WP_AJAX_Event_Handler extends WP_AJAX_Post_Handler {
             )
         ));
 
-        parent::__construct();
     }
 
     /**
-     * Handler request for nopriv
+     * Handle request.
      */
-    public function handler_nopriv() {
+    public function handler() {
 
-        // Execute parent handler first
-        parent::handler_nopriv();
+        // Do not delete
+        parent::handler();
 
         if ( $this->_get_param( 'event_before' ) || $this->_get_param( 'event_after' ) ) {
             $meta_query = array(
